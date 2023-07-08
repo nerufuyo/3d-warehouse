@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import ReactLoading from 'react-loading';
@@ -91,6 +92,7 @@ export default function PageContact() {
 
   return (
     <>
+      <NextSeo title={'Contact'} />
       <Hero
         key={`hero-${router.asPath}`}
         image={'/img/hero/4.webp'}

@@ -1,3 +1,4 @@
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -40,9 +41,10 @@ export default function Page3D({ pages: initialPages }: Props) {
 
   return (
     <>
+      <NextSeo title={'3D Model Sources'} />
       <Hero
         image={'/img/hero/1.webp'}
-        title={'Model Sources'}
+        title={'3D Model Sources'}
       />
 
       <div className={'px-4 md:px-8 w-full max-w-screen-xl mx-auto py-4'}>

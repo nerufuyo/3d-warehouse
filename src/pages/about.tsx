@@ -1,4 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
+import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 
 import Hero from 'components/Hero';
@@ -17,6 +17,7 @@ export default function PageAbout({ contributors }: Props) {
 
   return (
     <>
+      <NextSeo title={'About us'} />
       <Hero
         key={`hero-${router.asPath}`}
         image={'/img/hero/4.webp'}
@@ -42,7 +43,7 @@ export default function PageAbout({ contributors }: Props) {
         >
           <h3 className={'col-span-full w-full'}>Contributors</h3>
           <>
-            {contributors.map((contributor, index) => {
+            {contributors.map((contributor) => {
               const nameInitials = contributor.name
                 .split(' ')
                 .map((name) => name[0]);
@@ -84,7 +85,7 @@ export default function PageAbout({ contributors }: Props) {
   );
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps() {
   await googleSpreadsheets.loadInfo();
   const sheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Contributors];
   const rows = await sheet.getRows();

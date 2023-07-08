@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
+import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
@@ -101,6 +102,7 @@ export default function PageSearch({ keyword: queryKeyword, page }: Props) {
 
   return (
     <>
+      <NextSeo title={keyword ? `Searching for ${keyword}` : `Search`} />
       <Hero
         image={'/img/hero/2.webp'}
         title={'Search'}
