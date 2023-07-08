@@ -27,13 +27,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isGlobalLogin, setIsGlobalLogin] = useState<boolean>(false);
   const [seoProps, setSeoProps] = useState<NextSeoProps>({
     titleTemplate: 'Loading...',
-    defaultTitle: 'Loading...',
-    description: 'Loading...',
+    defaultTitle: '3D Warehouse',
+    description: 'From a group of people that hated content behind a paywall',
     openGraph: {
-      title: 'Loading...',
-      description: 'Loading...',
+      title: '3D Warehouse',
+      description: 'From a group of people that hated content behind a paywall',
       url: process.env.NEXT_PUBLIC_VERCEL_URL ?? '',
-      siteName: 'Loading...',
+      siteName: '3D Warehouse',
       images: [
         {
           url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/img/og-image.png`,

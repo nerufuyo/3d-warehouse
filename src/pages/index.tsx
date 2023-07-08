@@ -95,6 +95,7 @@ export default function PageHome({ latestContents }: Props) {
     </>
   );
 }
+
 export async function getServerSideProps() {
   await googleSpreadsheets.loadInfo();
   const contentsSheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Content];
