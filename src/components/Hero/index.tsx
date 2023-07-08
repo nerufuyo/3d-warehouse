@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 type Props = {
+  randomImage?: boolean;
   image: string;
   title: string;
 };
 
-export default function Hero({ image, title }: Props) {
+export default function Hero({ randomImage = true, image, title }: Props) {
   const [imageSrc, setImageSrc] = useState<string>('');
-  const randomImage: boolean = true;
   const totalImages: number = 6;
 
   useEffect(() => {
@@ -33,7 +33,14 @@ export default function Hero({ image, title }: Props) {
         src={imageSrc}
         alt={title}
         loading={'lazy'}
-        className={'h-full w-full object-cover opacity-50 absolute'}
+        className={
+          'h-full max-w-screen-lg w-full object-cover opacity-50 absolute'
+        }
+      />
+      <div
+        className={
+          'w-full h-full max-w-screen-lg   bg-gradient-to-r from-black via-transparent to-black absolute'
+        }
       />
       <div
         className={

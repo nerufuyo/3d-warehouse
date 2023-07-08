@@ -68,27 +68,27 @@ body {
   input,
   textarea {
     @apply bg-transparent focus:bg-zinc-950;
-    @apply border border-zinc-500 hover:border-zinc-200 active:border-blue-700 focus:border-blue-600;
+    @apply border border-zinc-500 hover:border-zinc-200 focus:border-blue-600 active:border-blue-700;
     @apply outline-none;
-    @apply px-4 py-1 rounded-lg;
+    @apply rounded-lg px-4 py-1;
     @apply transition;
-    @apply disabled:bg-zinc-900 disabled:border-zinc-900 disabled:text-zinc-500;
+    @apply disabled:border-zinc-900 disabled:bg-zinc-900 disabled:text-zinc-500;
   }
 
   select {
     @apply bg-transparent focus:bg-zinc-950;
-    @apply border border-zinc-500 hover:border-zinc-200 active:border-blue-700 focus:border-blue-600;
+    @apply border border-zinc-500 hover:border-zinc-200 focus:border-blue-600 active:border-blue-700;
     @apply outline-none;
-    @apply px-4 py-1 rounded-lg;
+    @apply rounded-lg px-4 py-1;
     @apply transition;
     @apply appearance-none;
-    @apply disabled:bg-zinc-900 disabled:border-zinc-900 disabled:text-zinc-500;
+    @apply disabled:border-zinc-900 disabled:bg-zinc-900 disabled:text-zinc-500;
   }
 
   button {
     @apply hover:bg-blue-700 active:bg-blue-900;
     @apply text-zinc-100 hover:text-zinc-50 active:text-zinc-100;
-    @apply border-none rounded-lg px-4 py-1 transition;
+    @apply rounded-lg border-none px-4 py-1 transition;
     @apply disabled:bg-zinc-900 disabled:text-zinc-500;
   }
 

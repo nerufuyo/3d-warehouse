@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FormEvent } from 'react';
@@ -20,18 +19,6 @@ type Props = {
 export default function PageHome({ latestContents }: Props) {
   const settings = useWebSettings();
   const router = useRouter();
-
-  // const [latestContents, setLatestContents] = useState<SheetContent[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(true);
-  //
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //
-  //   axios.get<APIResponse<SheetContent[]>>('/api/data/latest').then((data) => {
-  //     setLatestContents(data.data.data);
-  //     setIsLoading(false);
-  //   });
-  // }, []);
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -95,11 +82,6 @@ export default function PageHome({ latestContents }: Props) {
           }
         >
           <h3 className={'col-span-full my-2'}>Latest Models</h3>
-          {/*{isLoading ? (*/}
-          {/*  <div className={'col-span-full flex items-center justify-center'}>*/}
-          {/*    <Loading />*/}
-          {/*  </div>*/}
-          {/*) : (*/}
           <>
             {latestContents.map((content) => (
               <Content
@@ -108,13 +90,12 @@ export default function PageHome({ latestContents }: Props) {
               />
             ))}
           </>
-          {/*)}*/}
         </section>
       </div>
     </>
   );
 }
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps() {
   await googleSpreadsheets.loadInfo();
   const contentsSheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Content];
   const pagesSheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Pages];
