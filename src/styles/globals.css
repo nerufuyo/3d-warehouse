@@ -2,26 +2,105 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@layer base {
+  body {
+    @apply bg-black text-white;
+  }
+  body::-webkit-scrollbar {
+    @apply w-1;
+  }
+  body::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  body::-webkit-scrollbar-thumb {
+    @apply bg-zinc-500 hover:bg-zinc-500 active:bg-zinc-700;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5 {
+    @apply text-lg;
+  }
+
+  h6 {
+    @apply text-base;
+  }
+
+  a {
+    @apply opacity-75 hover:opacity-100;
+    @apply transition-opacity duration-150;
+  }
+
+  a.active {
+    @apply opacity-100;
+    @apply font-bold;
+  }
+
+  input,
+  textarea {
+    @apply bg-transparent focus:bg-zinc-950;
+    @apply border border-zinc-500 hover:border-zinc-200 active:border-blue-700 focus:border-blue-600;
+    @apply outline-none;
+    @apply px-4 py-1 rounded-lg;
+    @apply transition;
+    @apply disabled:bg-zinc-900 disabled:border-zinc-900 disabled:text-zinc-500;
+  }
+
+  select {
+    @apply bg-transparent focus:bg-zinc-950;
+    @apply border border-zinc-500 hover:border-zinc-200 active:border-blue-700 focus:border-blue-600;
+    @apply outline-none;
+    @apply px-4 py-1 rounded-lg;
+    @apply transition;
+    @apply appearance-none;
+    @apply disabled:bg-zinc-900 disabled:border-zinc-900 disabled:text-zinc-500;
+  }
+
+  button {
+    @apply hover:bg-blue-700 active:bg-blue-900;
+    @apply text-zinc-100 hover:text-zinc-50 active:text-zinc-100;
+    @apply border-none rounded-lg px-4 py-1 transition;
+    @apply disabled:bg-zinc-900 disabled:text-zinc-500;
+  }
+
+  button[type='reset'] {
+    @apply bg-red-500 hover:bg-red-700 active:bg-red-900;
+    @apply text-zinc-100 hover:text-zinc-50 active:text-zinc-100;
+    @apply disabled:bg-zinc-900 disabled:text-zinc-500;
+  }
+
+  button[type='submit'] {
+    @apply bg-blue-500 hover:bg-blue-700 active:bg-blue-900;
+    @apply text-zinc-100 hover:text-zinc-50 active:text-zinc-100;
+    @apply disabled:bg-zinc-900 disabled:text-zinc-500;
+  }
 }
