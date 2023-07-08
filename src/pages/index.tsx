@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,9 +8,11 @@ import Content from 'components/Content';
 import Hero from 'components/Hero';
 
 import { useWebSettings } from 'contexts/webSettings';
+import googleSpreadsheets from 'utils/googleSpreadsheets';
 
-import { APIResponse, HttpError } from 'types/apiResponse';
 import { SheetContent } from 'types/spreadsheets/contents';
+import { EnumSheets } from 'types/spreadsheets/enum';
+import { SheetPages } from 'types/spreadsheets/pages';
 
 type Props = {
   latestContents: SheetContent[];
@@ -114,19 +115,70 @@ export default function PageHome({ latestContents }: Props) {
   );
 }
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const data = await axios.get<APIResponse<SheetContent[]>>(
-    '/api/data/latest',
-    {
-      baseURL: process.env.VERCEL_URL,
-    },
-  );
-  if (data.data.error) {
-    throw new HttpError(data.data.error.message, 500);
-  }
+  await googleSpreadsheets.loadInfo();
+  const contentsSheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Content];
+  const pagesSheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Pages];
+
+  const getContentRows = contentsSheet.getRows();
+  const getPagesRows = pagesSheet.getRows();
+
+  const [contentRows, pagesRows] = await Promise.all([
+    getContentRows,
+    getPagesRows,
+  ]);
+
+  const pages: SheetPages[] = pagesRows
+    .map((row) => {
+      const object = row.toObject();
+      if (!object.Key || !object.Name) return undefined;
+
+      return {
+        key: object.Key,
+        name: object.Name,
+        description: object.Description ?? null,
+        image: object.Image ?? null,
+      };
+    })
+    .filter((row) => row !== undefined) as SheetPages[];
+
+  const data: SheetContent[] = contentRows
+    .map((row) => {
+      const object = row.toObject();
+      if (
+        !object.ID ||
+        !object.Name ||
+        !object.PageKey ||
+        !object.Brand ||
+        !object.Format ||
+        !object.Download ||
+        !object.Image ||
+        !object.Date ||
+        !object.Uploader
+      )
+        return undefined;
+      const pagesData = pages.find((page) => page.key === object.PageKey);
+      if (!pagesData) return undefined;
+
+      return {
+        id: object.ID,
+        pageKey: object.PageKey,
+        name: object.Name,
+        brand: object.Brand,
+        format:
+          object.Format.split(',').map((format: string) => format.trim()) ?? [],
+        download: object.Download,
+        image: object.Image,
+        date: object.Date,
+        uploader: object.Uploader,
+        pages: pagesData,
+      };
+    })
+    .filter((row) => row !== undefined)
+    .sort((a, b) => b?.id - a?.id) as SheetContent[];
 
   return {
     props: {
-      latestContents: data.data.data,
+      latestContents: data.slice(0, 4),
     },
   };
 }

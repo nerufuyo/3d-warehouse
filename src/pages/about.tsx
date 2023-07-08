@@ -1,11 +1,12 @@
-import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 
 import Hero from 'components/Hero';
 
-import { APIResponse, HttpError } from 'types/apiResponse';
+import googleSpreadsheets from 'utils/googleSpreadsheets';
+
 import { SheetContributor } from 'types/spreadsheets/contributors';
+import { EnumSheets } from 'types/spreadsheets/enum';
 
 type Props = {
   contributors: SheetContributor[];
@@ -84,19 +85,22 @@ export default function PageAbout({ contributors }: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const data = await axios.get<APIResponse<SheetContributor[]>>(
-    '/api/contributors',
-    {
-      baseURL: process.env.VERCEL_URL,
-    },
-  );
-  if (data.data.error) {
-    throw new HttpError(data.data.error.message, 500);
-  }
+  await googleSpreadsheets.loadInfo();
+  const sheet = googleSpreadsheets.sheetsByTitle[EnumSheets.Contributors];
+  const rows = await sheet.getRows();
+
+  const data: SheetContributor[] = rows.map((row) => {
+    const object = row.toObject();
+
+    return {
+      name: object.Name,
+      avatar: object.Avatar ?? null,
+    };
+  });
 
   return {
     props: {
-      contributors: data.data.data,
+      contributors: data,
     },
   };
 }
