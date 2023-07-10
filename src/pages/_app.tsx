@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NextSeo, NextSeoProps } from 'next-seo';
+import { DefaultSeo, NextSeo, NextSeoProps } from 'next-seo';
 import type { AppProps } from 'next/app';
 import { Exo_2 } from 'next/font/google';
 import { useRouter } from 'next/router';
@@ -164,7 +164,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </>
       )}
 
-      <NextSeo {...seoProps} />
+      <DefaultSeo {...seoProps} />
       {isLoading && (
         <main
           className={
