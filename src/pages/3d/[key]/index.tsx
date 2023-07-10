@@ -69,26 +69,88 @@ export default function PageKey({
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchKeyword, currentPage]);
+  }, []);
 
   const paginationHandle = async (pageNumber: number, formKeyword?: string) => {
     setIsLoading(true);
-    setSearchKeyword(formKeyword ?? '');
-    setCurrentPage(pageNumber);
+
+    // change page query
     await router.replace({
       query: {
         key: pageData.key,
-        keyword: formKeyword ?? '',
+        keyword: formKeyword ?? searchKeyword,
         page: pageNumber,
       },
     });
+
+    // get data
+    const res = await axios.get<APIResponse<SheetContent[]>>(
+      `/api/data/${pageData.key}`,
+      {
+        params: {
+          key: pageData.key,
+          keyword: formKeyword ?? searchKeyword,
+          page: pageNumber,
+        },
+      },
+    );
+
+    // set data
+    setContents(res.data.data ?? []);
+    if (res.data.pagination) {
+      setCurrentPage(res.data.pagination.currentPage);
+      setIsNextPage(res.data.pagination.isNextPage);
+      setIsPrevPage(res.data.pagination.isPrevPage);
+      setTotalItems(res.data.pagination.totalItems);
+      setTotalPages(res.data.pagination.totalPages);
+    }
+
+    setIsLoading(false);
   };
 
   const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const keyword = (e.target as any).keyword.value;
+    setSearchKeyword(keyword);
 
-    await paginationHandle(1, keyword);
+    if (!keyword) {
+      return await paginationHandle(1, '');
+    }
+
+    setIsLoading(true);
+
+    // change page query
+    await router.replace({
+      query: {
+        key: pageData.key,
+        keyword: keyword,
+        page: 1,
+      },
+    });
+
+    // get data
+    const res = await axios.get<APIResponse<SheetContent[]>>(
+      `/api/data/${pageData.key}`,
+      {
+        params: {
+          key: pageData.key,
+          keyword: keyword,
+          page: 1,
+        },
+      },
+    );
+
+    // set data
+    setContents(res.data.data ?? []);
+    if (res.data.pagination) {
+      setCurrentPage(res.data.pagination.currentPage);
+      setIsNextPage(res.data.pagination.isNextPage);
+      setIsPrevPage(res.data.pagination.isPrevPage);
+      setTotalItems(res.data.pagination.totalItems);
+      setTotalPages(res.data.pagination.totalPages);
+    }
+
+    setIsLoading(false);
   };
 
   return (
