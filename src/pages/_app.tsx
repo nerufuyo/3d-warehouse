@@ -37,10 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
       siteName: '3D Warehouse',
       images: [
         {
-          url: `${
-            process.env.NEXT_PUBLIC_VERCEL_URL ??
-            'https://3d-warehouse.vercel.app'
-          }/img/og-image.webp`,
+          url: `/img/og-image.webp`,
           width: 1200,
           height: 630,
         },

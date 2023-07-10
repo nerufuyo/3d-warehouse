@@ -17,13 +17,11 @@ export default function generateOpenGraph(
         description ??
         'From a group of people that hated content behind a paywall',
       url:
-        url ??
-        process.env.NEXT_PUBLIC_VERCEL_URL ??
-        'https://3d-warehouse.vercel.app',
+        process.env.NEXT_PUBLIC_VERCEL_URL ?? 'https://3d-warehouse.vercel.app',
       siteName: `${title} | 3D Warehouse`,
       images: [
         {
-          url: image ?? 'https://3d-warehouse.vercel.app/images/og-image.webp',
+          url: image ?? '/images/og-image.webp',
           width: 1200,
           height: 630,
         },
