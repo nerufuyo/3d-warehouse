@@ -10,6 +10,7 @@ import Hero from 'components/Hero';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
 import googleSpreadsheets from 'utils/googleSpreadsheets';
 
 import { APIResponse } from 'types/apiResponse';
@@ -88,12 +89,16 @@ export default function PageKey({
     await paginationHandle(1, keyword);
   };
 
+  const seo = generateOpenGraph(
+    pageData.name,
+    pageData.description ?? undefined,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/3d/${pageData.key}`,
+    pageData.image ?? undefined,
+  );
+
   return (
     <>
-      <NextSeo
-        title={pageData.name}
-        description={pageData.description}
-      />
+      <NextSeo {...seo} />
       <Hero
         randomImage={!pageData.image}
         image={pageData.image ?? '/img/hero/1.webp'}
@@ -144,7 +149,8 @@ export default function PageKey({
             <>
               <span className={'col-span-full w-full rounded-lg text-center'}>
                 We found <strong>{totalItems}</strong> results for{' '}
-                <strong>{searchKeyword}</strong>.
+                <strong>{searchKeyword ? searchKeyword : pageData.name}</strong>
+                .
               </span>
               {contents.length > 0 ? (
                 <>

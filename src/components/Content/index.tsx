@@ -23,19 +23,26 @@ export default function Content({ content }: Props) {
         src={content.image}
         alt={content.name}
         className={
-          'w-full h-48 object-cover cursor-pointer hover:scale-110 hover:opacity-100 opacity-75 transition-all'
+          'w-full h-48 object-cover cursor-pointer hover:scale-105 hover:opacity-100 opacity-75 transition-all'
         }
+        title={capitalize(content.name)}
         loading={'lazy'}
         onClick={() => window.open(content.image, '_blank')}
       />
       <div className={'py-1 px-2 flex flex-col w-full gap-1'}>
-        <h4 className={'my-2 text-center'}>{capitalize(content.name)}</h4>
+        <h5
+          className={'my-1 text-center line-clamp-1'}
+          title={capitalize(content.name)}
+        >
+          {capitalize(content.name)}
+        </h5>
         <div className={'flex flex-col gap-1 w-full text-sm items-center'}>
           <Link
             href={`/search?keyword=${content.brand.toLowerCase()}`}
             className={
               'w-full flex items-center justify-center py-0.5 text-center'
             }
+            title={`Search ${capitalize(content.brand)}`}
           >
             {capitalize(content.brand)}
           </Link>
@@ -44,6 +51,7 @@ export default function Content({ content }: Props) {
             className={
               'w-full flex items-center justify-center py-0.5 text-center'
             }
+            title={`Browse ${capitalize(content.pages.name)}`}
           >
             {capitalize(content.pages.name)}
           </Link>

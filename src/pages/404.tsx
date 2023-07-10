@@ -1,11 +1,18 @@
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
+
 export default function Custom404() {
   const router = useRouter();
+
+  const seo = generateOpenGraph(
+    '404 Not Found',
+    'The page you are looking for is not found.',
+  );
   return (
     <>
-      <NextSeo title={'Not Found'} />
+      <NextSeo {...seo} />
       <main
         className={
           'w-full h-full flex-1 flex flex-col items-center justify-center gap-8 md:gap-4 text-center px-8'

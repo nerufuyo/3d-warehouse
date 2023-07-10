@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Hero from 'components/Hero';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
 import googleSpreadsheets from 'utils/googleSpreadsheets';
 
 import { EnumSheets } from 'types/spreadsheets/enum';
@@ -39,9 +40,11 @@ export default function Page3D({ pages: initialPages }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedKeyword]);
 
+  const seo = generateOpenGraph('3D Model Sources');
+
   return (
     <>
-      <NextSeo title={'3D Model Sources'} />
+      <NextSeo {...seo} />
       <Hero
         image={'/img/hero/1.webp'}
         title={'3D Model Sources'}

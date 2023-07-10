@@ -4,7 +4,7 @@ import googleSpreadsheets from 'utils/googleSpreadsheets';
 
 import { APIResponse } from 'types/apiResponse';
 import { SheetContributor } from 'types/spreadsheets/contributors';
-import { EnumSheets } from 'types/spreadsheets/enum';
+import { CacheControl, EnumSheets } from 'types/spreadsheets/enum';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'GET') {
@@ -30,10 +30,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       data: data,
     };
 
-    res.setHeader(
-      'Cache-Control',
-      'public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400',
-    );
+    res.setHeader('Cache-Control', CacheControl);
     return res.status(200).json(payload);
   } catch (error: any) {
     const payload: APIResponse = {

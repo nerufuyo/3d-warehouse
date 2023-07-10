@@ -10,6 +10,8 @@ import Hero from 'components/Hero';
 import Loading from 'components/Loading';
 import Pagination from 'components/Pagination';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
+
 import { APIResponse } from 'types/apiResponse';
 import { SheetContent } from 'types/spreadsheets/contents';
 
@@ -100,9 +102,13 @@ export default function PageSearch({ keyword: queryKeyword, page }: Props) {
     await paginationHandle(1);
   };
 
+  const seo = generateOpenGraph(
+    keyword ? `Searching for ${keyword}` : `Search`,
+  );
+
   return (
     <>
-      <NextSeo title={keyword ? `Searching for ${keyword}` : `Search`} />
+      <NextSeo {...seo} />
       <Hero
         image={'/img/hero/2.webp'}
         title={'Search'}

@@ -6,6 +6,8 @@ import ReactLoading from 'react-loading';
 
 import Hero from 'components/Hero';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
+
 import { APIResponse } from 'types/apiResponse';
 
 export default function PageContact() {
@@ -90,9 +92,10 @@ export default function PageContact() {
     }
   };
 
+  const seo = generateOpenGraph('Contact');
   return (
     <>
-      <NextSeo title={'Contact'} />
+      <NextSeo {...seo} />
       <Hero
         key={`hero-${router.asPath}`}
         image={'/img/hero/4.webp'}

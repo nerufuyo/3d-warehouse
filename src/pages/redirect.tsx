@@ -2,6 +2,8 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
+
 type Props = {
   url: string;
   name: string;
@@ -20,9 +22,11 @@ export default function PageRedirect({ url, name, pageKey }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const seo = generateOpenGraph(`Redirecting to ${name} download page`);
+
   return (
     <>
-      <NextSeo title={`Redirecting to ${name} download page`} />
+      <NextSeo {...seo} />
       <div
         className={
           'flex flex-col items-center justify-center w-full px-4 md:px-8 flex-1'

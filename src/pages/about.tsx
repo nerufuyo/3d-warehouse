@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import Hero from 'components/Hero';
 
+import generateOpenGraph from 'utils/generateOpenGraph';
 import googleSpreadsheets from 'utils/googleSpreadsheets';
 
 import { SheetContributor } from 'types/spreadsheets/contributors';
@@ -15,9 +16,10 @@ type Props = {
 export default function PageAbout({ contributors }: Props) {
   const router = useRouter();
 
+  const seo = generateOpenGraph('About us');
   return (
     <>
-      <NextSeo title={'About us'} />
+      <NextSeo {...seo} />
       <Hero
         key={`hero-${router.asPath}`}
         image={'/img/hero/4.webp'}

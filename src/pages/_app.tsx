@@ -26,17 +26,21 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isGlobalLogin, setIsGlobalLogin] = useState<boolean>(false);
   const [seoProps, setSeoProps] = useState<NextSeoProps>({
-    titleTemplate: 'Loading...',
+    titleTemplate: '%s | 3D Warehouse',
     defaultTitle: '3D Warehouse',
     description: 'From a group of people that hated content behind a paywall',
     openGraph: {
       title: '3D Warehouse',
       description: 'From a group of people that hated content behind a paywall',
-      url: process.env.NEXT_PUBLIC_VERCEL_URL ?? '',
+      url:
+        process.env.NEXT_PUBLIC_VERCEL_URL ?? 'https://3d-warehouse.vercel.app',
       siteName: '3D Warehouse',
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/img/og-image.png`,
+          url: `${
+            process.env.NEXT_PUBLIC_VERCEL_URL ??
+            'https://3d-warehouse.vercel.app'
+          }/img/og-image.png`,
           width: 1200,
           height: 630,
         },
