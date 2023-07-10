@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { GetServerSidePropsContext } from 'next';
-import { NextSeo } from 'next-seo';
+import { NextSeo, NextSeoProps } from 'next-seo';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
 import { MdSearch } from 'react-icons/md';
@@ -22,11 +22,13 @@ type Props = {
   pageData: SheetPages;
   keyword: string;
   page: number;
+  seo: NextSeoProps;
 };
 export default function PageKey({
   pageData,
   keyword: qKeyword,
   page: qPage,
+  seo,
 }: Props) {
   const router = useRouter();
 
@@ -88,13 +90,6 @@ export default function PageKey({
 
     await paginationHandle(1, keyword);
   };
-
-  const seo = generateOpenGraph(
-    pageData.name,
-    pageData.description ?? undefined,
-    `${process.env.NEXT_PUBLIC_VERCEL_URL}/3d/${pageData.key}`,
-    pageData.image ?? undefined,
-  );
 
   return (
     <>
@@ -232,11 +227,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
+  const seo = generateOpenGraph(
+    pageData.name,
+    pageData.description ?? undefined,
+    `${process.env.NEXT_PUBLIC_VERCEL_URL}/3d/${pageData.key}`,
+    pageData.image ?? undefined,
+  );
+
   return {
     props: {
       pageData,
       keyword: keyword ?? '',
       page: page ? parseInt(page as string) : 1,
+      seo,
     },
   };
 }
