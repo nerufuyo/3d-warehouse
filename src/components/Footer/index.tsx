@@ -48,14 +48,14 @@ export default function Footer() {
             <Loading />
           </div>
         ) : (
-          <div className='grid grid-cols-2 md:grid-cols-4 place-items-center w-full gap-x-8 gap-y-2 md:gap-x-4'>
+          <div className='flex flex-wrap items-center justify-center max-w-screen-sm w-full gap-x-8 gap-y-2 md:gap-x-4'>
             {partners.map((partner, index) => (
               <Fragment key={`partner-${partner.name}@${index}`}>
                 {partner.link ? (
                   <Link
                     href={partner.link}
                     target='_blank'
-                    className='flex flex-col items-center justify-center text-sm text-center opacity-90 hover:opacity-100 transition-opacity'
+                    className='flex flex-grow-0 flex-shrink-0 flex-col items-center justify-center text-sm text-center opacity-90 hover:opacity-100 transition-opacity'
                   >
                     <img
                       src={partner.banner}
@@ -68,7 +68,7 @@ export default function Footer() {
                     <span>{partner.name}</span>
                   </Link>
                 ) : (
-                  <div className='flex flex-col items-center justify-center text-sm text-center opacity-90 hover:opacity-100 text-zinc-200/80 hover:text-zinc-50 transition'>
+                  <div className='flex flex-grow-0 flex-shrink-0 flex-col items-center justify-center text-sm text-center opacity-90 hover:opacity-100 text-zinc-200/80 hover:text-zinc-50 transition'>
                     <img
                       src={partner.banner}
                       alt={partner.name}
