@@ -23,7 +23,7 @@ export default function generateOpenGraph(
       siteName: `${title} | 3D Warehouse`,
       images: [
         {
-          url: image ?? 'https://3d-warehouse.vercel.app/images/og-image.png',
+          url: image ?? 'https://3d-warehouse.vercel.app/images/og-image.webp',
           width: 1200,
           height: 630,
         },
